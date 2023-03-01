@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import environ
 import locale
+import dj_database_url
 from pathlib import Path
 
 # Para que las fechas se muestren en español
@@ -119,15 +120,11 @@ WSGI_APPLICATION = 'ajedrez.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Render PostgreSQL database (live)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('NAME'),
-        'USER': env('USER'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOST'),
-        'PORT': env('PORT')
-    }
+    'default': dj_database_url.config(
+        default=env('DATABASE_URL')
+        )
 }
 
 
