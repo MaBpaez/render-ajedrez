@@ -1,0 +1,162 @@
+    {% extends "core/base.html" %}
+    {% load static %}
+
+    {% block title %}Contacto| Ajedrez Málaga{% endblock title %}
+
+    {% block csspage %}<link rel="stylesheet" href="{% static 'contacto/css/contacto.css' %}" />{% endblock csspage %}
+
+    {% block recaptcha %}<script src="https://www.google.com/recaptcha/api.js?render={{recaptcha_site_key}}"></script>{% endblock recaptcha %}
+
+    {% block grecaptcha %}
+      <script>
+        //global grecaptcha
+        grecaptcha.ready(function() {
+          grecaptcha.execute('{{recaptcha_site_key}}', {action: "/contact/"}).then(function(token) {
+            document.getElementById('g-recaptcha-response').value = token;
+          });
+        });
+      </script>{% endblock grecaptcha%}
+
+    {% block carrusel %}<!-- Hero -->
+    <div class="p-5 text-center bg-image">
+    <!--<div class="p-5 text-center bg-image" style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+        height: 400px;
+      ">-->
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-white">
+            <h1 class="mb-3 fprimer display-1">Contacto</h1>
+            <h4 class="mb-3">Para contactar con nosotros rellena el siguiente formulario.</h4>
+            <!--<a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a>-->
+          </div>
+        </div>
+      </div>
+    </div><!-- Hero -->{% endblock carrusel %}
+
+    {% block breadcrumb %}<!-- Breadcrumb -->
+    <div class="container my-4">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+          <li class="breadcrumb-item active">Contacto</a></li>
+        </ol>
+      </nav>
+    </div>{% endblock breadcrumb %}
+
+    {% if messages %}
+    {% block section %}<div class="modal fade" tabindex="-1" id="recaptchaModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          {% for message in messages %}
+          <div class="modal-header">
+            <h5 class="modal-title {% if message.extra_tags == 'success' %}text-success{% else %}text-danger{% endif %}">
+              Formulario {% if message.extra_tags == 'error' %}no enviado.{% else %}enviado con éxito.{% endif %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body {% if message.extra_tags == 'success' %}text-success{% else %}text-danger{% endif %}">
+            <!--<ul class="messages container my-4">-->
+            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            <!--</ul>-->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+              {% if message.extra_tags == 'success' %}
+              <a href="{% url 'torneo:inicio'%}" style="text-decoration:none; color: white;">Cerrar</a>
+              {% else %}
+              Cerrar
+              {% endif %}
+            </button>
+          </div>{% endfor %}
+        </div>
+      </div>
+    </div>{% endblock section %}
+    {% endif %}
+
+    {% block main %}<div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header bg-chess text-white"><i class="fa fa-envelope"></i> Contacta con nosotros.</div>
+              <div class="card-body">
+                <form action="." method="POST">{% csrf_token %}
+                  <div class="col mb-3">
+                    <label for="{{ form.nombre.id_for_label }}">Nombre</label>
+                    <!--<input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Nombre" required>-->
+                    {{ form.nombre }}
+                  </div>
+                  <div class="col mb-3">
+                    <label for="{{ form.email.id_for_label }}">Correo electrónico</label>
+                    <!--<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="@mail" required>-->
+                    {{ form.email }}
+                    <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con nadie.</small>
+                  </div>
+                  <div class="col mb-3">
+                    <label for="{{ form.mensaje.id_for_label }}">Mensaje</label>
+                    {{ form.mensaje }}
+                    <!--<textarea class="form-control" id="message" rows="6" required></textarea>-->
+                  </div>
+                  <div class="col mb-3">
+                    <small id="emailHelp" class="form-text text-muted">Opciones de envio.</small>
+                    {% for radio in form.opcion %}
+                    <div class="form-check">
+                      {{ radio.tag }}
+                      <label class="form-check-label" for="{{ radio.id_for_label }}">
+                      {{ radio.choice_label }}
+                      </label>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <div class="col-12">
+                  {% load pages_extras %}
+                  {% get_page_privacy as page %}
+                    <div class="form-check ps-0">
+                      {{ form.politica_privacidad}}
+                      <label class="form-check-label" for="{{ form.politica_privacidad.id_for_label }}">
+                        <a href="{% url 'pagina:page' page.id page.title|slugify %}">Aceptar política privacidad</a>
+                      </label>
+                    </div>
+                  </div>
+                  <!-- reCAPTCHA input -->
+                  <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                  <div class="mx-auto">
+                  <button type="submit" class="btn btn-chess float-end">Enviar</button></div>
+                </form>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-4">
+          <div class="card bg-light mb-3">
+            <div class="card-header bg-success text-white text-uppercase"><i class="fa fa-home"></i> Dirección</div>
+            <div class="card-body">
+              <p>C/ Malpica, 11</p>
+              <p>29002 Málaga</p>
+              <p>España</p>
+              <p>Email : email@example.com</p>
+              <p>Tel. +33 12 56 11 51 84</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b-example-divider my-5"></div>
+
+    <!--Mapa-->
+    <div class="container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d25586.535766315224!2d-4.429696!3d36.714948!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72f79a167dbacb%3A0x3b96f53ac50d6e6!2zQy4gTWFscGljYSwgMTEsIDI5MDAyIE3DoWxhZ2EsIEVzcGHDsWE!5e0!3m2!1ses!2sus!4v1666254203606!5m2!1ses!2sus"
+        width="100%"
+        height="600"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>{% endblock main %}
+
+    {% block extra %}<script>
+      var recaptchaModal = new bootstrap.Modal(document.getElementById('recaptchaModal'), { keyboard: false });
+      {% if messages %}recaptchaModal.show();{% endif %}
+    </script>{% endblock extra %}

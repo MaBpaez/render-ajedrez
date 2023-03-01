@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Búsqueda Circuito Diputación | Ajedrez Málaga{% endblock title %}
+
+{% block css %}<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">{% endblock css %}
+{% block csspage %}<link rel="stylesheet" href="{% static 'circuitos/css/circuitos.css' %}" />{% endblock csspage %}
+
+{% block breadcrumb %}<!-- Breadcrumb -->
+<div class="container my-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'circuitos:new_tournaments' %}">Circuito Diputación</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Búsqueda</li>
+    </ol>
+  </nav>
+</div>{% endblock breadcrumb %}
+
+{% block section %}
+<section class="container px-4 mb-5">
+  <h1 class="display-5 fw-bold text-blue-gradient text-center py-5">
+    Resultados de la búsqueda
+  </h1>
+  <div class="row g-5">
+    <div class="col">
+      <div class="list-group">
+      {% for torneo in results %}
+      <a href="{{ torneo.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-primary">{{ torneo.title }}</a>
+      {% empty %}
+        <h3>¡Vaya!, parece que no hay resultados.</h3>
+      {% endfor %}
+      </div>
+    </div>  <!-- fin col -->
+  </div>  <!-- fin row -->
+  {% if not results %}
+  <div class="row mt-3">
+    <!-- Búsqueda -->
+    <form action="{% url 'circuitos:circuito_search' %}" method="GET" class="d-flex">
+      {{ form.query }}
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+  </div>
+  {% endif %}
+</section>{% endblock section %}

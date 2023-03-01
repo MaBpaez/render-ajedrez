@@ -1,0 +1,7 @@
+.hero-historico {
+  background-image: url('../img/hitorico_torneos.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 500px;
+}

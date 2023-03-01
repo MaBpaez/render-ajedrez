@@ -1,0 +1,66 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Escuelas y Clubes de Ajedrez | Diputación Málaga{% endblock title %}
+
+{% block csspage %}<link rel="stylesheet" href="{% static 'escuelas/css/school.css' %}"/>{% endblock csspage %}
+
+{% block breadcrumb %}<!-- Breadcrumb -->
+    <div class="container my-4">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Escuelas y Clubes de Ajedrez</li>
+        </ol>
+      </nav>
+    </div>{% endblock breadcrumb %}
+
+{% block section %}
+    <div class="container my-4">
+      <div class="row">
+        {% for club in todos_los_clubes %}
+        <div class="col-sm-6 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <header class="grid-header-escuela">
+                <h5>{{ club.name }}</h5>
+              </header>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><span class="fw-bold">Sede Social:</span> {{ club.address }}</p>
+              <p class="card-text"><span class="fw-bold">Dirección local de juego:</span> {{ club.play_place }}</p>
+              <p class="card-text"><span class="fw-bold">Localidad:</span> {{ club.population }}</p>
+              <p class="card-text"><span class="fw-bold">Código Postal:</span> {{ club.zip_code }}</p>
+              <p class="cart-text"><span class="fw-bold">Email:</span> {{ club.contact }}</p>
+              <p class="cart-text"><span class="fw-bold">Presidente:</span> {{ club.president }}</p>
+              {% if club.website %}<a target="_blank" href="{{ club.website }}" class="btn btn-primary btn-sm">Ir al sitio web</a>{% endif %}
+            </div>
+            <hr/>
+            {% if club.body %}<div class="card-body">
+              {{ club.body|truncatewords_html:22|safe }}
+              <p>
+                <button class="btn btn-info btn-sm"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ club.name|slugify }}"
+                        aria-expanded="false"
+                        aria-controls="{{ club.name }}">
+                  Ver nuevo contenido
+                </button>
+              </p>
+              <div class="collapse" id="{{ club.name|slugify }}">
+                <div class="card card-body">
+                  {{ club.body|safe }}
+                  <figure class="figure">
+                    <svg class="bd-placeholder-img figure-img img-fluid rounded" width="400" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 400x300" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">400x300</text></svg>
+                    <!-- <img src="..." class="figure-img img-fluid rounded" alt="..."> -->
+                    <figcaption class="figure-caption text-end">Nunc fringilla iaculis leo.</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>  <!-- fin card body 1 -->
+            {% endif %}
+          </div>  <!-- fin card 1 -->
+        </div>  <!-- fin col -->
+        {% endfor %}
+      </div>  <!-- fin row -->
+    </div>{% endblock section%}

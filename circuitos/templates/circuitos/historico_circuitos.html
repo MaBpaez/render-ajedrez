@@ -1,0 +1,306 @@
+    {% extends "core/base.html" %}
+    {% load static %}
+    {% block title %}Histórico Circuitos Diputación | Ajedrez Málaga{% endblock title %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'core/css/datatables.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'core/css/responsive.dataTables.min.css' %}" />{% endblock css%}
+    {% block csspage %}
+    <link rel="stylesheet" href="{% static 'core/css/historico.css' %}" />{% endblock csspage %}
+
+    {% block carrusel %}<div class="container-fluid">
+      <div class="col position-realitve">
+        <div class="p-4 p-md-5 mt-4 mb-4 text-white rounded hero-historico">
+            <!-- <img class="img-fluid rounded" src="{% static 'core/img/historico-ajedrez-portada.jpg' %}" alt="Historico ajedrez Málaga"> -->
+            <div class="col-md-6 px-0">
+              <h1 class="display-1 fprimer position-absolute top-50 start-50 translate-middle text-center">
+                Histórico Torneos
+              </h1>
+            </div>
+        </div>
+      </div>
+    </div>{% endblock carrusel %}
+
+    {% block breadcrumb %}<!-- Breadcrumb -->
+    <div class="container my-4">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'circuitos:new_tournaments' %}">Circuito Diputación</a></li>
+          {% if not qs and not get_all_tournaments %}
+          <li class="breadcrumb-item active" aria-current="page">Histórico Circuitos Diputación</li>
+          {% else %}
+          <li class="breadcrumb-item"><a href="{% url 'circuitos:historico-torneos-diputacion' %}">Histórico Circuito Diputación</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ formatted_date|title }}</li>
+          {% endif %}
+        </ol>
+      </nav>
+    </div>{% endblock breadcrumb %}
+
+    {% block main %}
+    <section class="container mt-5">
+      <div class="row g-5">
+        <div class="col-md-9">
+          <div class="card">
+            {% if get_all_tournaments %}
+            <div class="card-body">
+              <div class="alert alert-finalizado" role="alert">
+                Todos los torneos
+              </div>
+              <div class="row">
+                <table id="current-month" class="table table-striped" style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th>Inicio</th>
+                      <th>Final</th>
+                      <th>Torneo</th>
+                      <th>Localidad</th>
+                      <th>Provincia</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for torneo in get_all_tournaments %}
+                    <tr>
+                      <td>{{ torneo.start|date:"SHORT_DATE_FORMAT" }}</td>
+                      <td>{{ torneo.finish|date:"SHORT_DATE_FORMAT" }}</td>
+                      <td><a href="{{ torneo.get_absolute_url }}">{{ torneo.title }}</a></td>
+                      <td>{{ torneo.location }}</td>
+                      <td>{{ torneo.province }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table> <!-- fin table -->
+              </div> <!-- fin row -->
+            </div> <!-- fin card body -->
+            {% else %}
+            <div class="card-body">
+              <div class="alert {% if not qs %}alert-nuevo{% else %}alert-finalizado{% endif %}" role="alert">
+                {#{% if not qs %}Torneos año actual{% else %}Torneos {{ request.path|slice:"27:-1" }}{% endif %}#}
+                {% if not qs %}Torneos año actual{% else %}Torneos {{ formatted_date|title }}{% endif %}
+              </div>
+              <div class="row">
+                <table id="current-month" class="table table-striped" style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th>Inicio</th>
+                      <th>Final</th>
+                      <th>Torneo</th>
+                      <th>Localidad</th>
+                      <th>Provincia</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if not qs %}
+                    {% for torneo in current_year_tournaments %}
+                    <tr>
+                      <td>{{ torneo.start|date:"SHORT_DATE_FORMAT" }}</td>
+                      <td>{{ torneo.finish|date:"SHORT_DATE_FORMAT" }}</td>
+                      <td><a href="{{ torneo.get_absolute_url }}">{{ torneo.title }}</a></td>
+                      <td>{{ torneo.location }}</td>
+                      <td>{{ torneo.province }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    {% for torneo in year_month_tournaments %}
+                    <tr>
+                      <td>{{ torneo.start|date:"SHORT_DATE_FORMAT" }}</td>
+                      <td>{{ torneo.finish|date:"SHORT_DATE_FORMAT" }}</td>
+                      <td><a href="{{ torneo.get_absolute_url }}">{{ torneo.title }}</a></td>
+                      <td>{{ torneo.location }}</td>
+                      <td>{{ torneo.province }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                  </tbody>
+                </table> <!-- fin table -->
+              </div> <!-- fin row -->
+            </div> <!-- fin card body -->
+            {% endif %}
+          </div> <!-- fin card -->
+        </div> <!-- fin col -->
+
+        <div class="col-md-3">
+          <div class="position-sticky" style="top: 8rem;">
+            <h3 class="text-center">Históricos</h3>
+            <div class="text-center my-3">
+              <a class="btn btn-chess" href="{% url 'circuitos:todo-historico' 'todos los torneos'|slugify %}"
+                role="button">Todos los torneos
+              </a>
+            </div>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Año {{ current_year }}
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group">
+                      <li class="list-group-item active-2" aria-current="true">
+                        <a class="link-light" href="{% url 'circuitos:torneos-year-month' current_year 1 %}">Enero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 2 %}">Febrero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 3 %}">Marzo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 4 %}">Abril</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 5 %}">Mayo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 6 %}">Junio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 7 %}">Julio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 8 %}">Agosto</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 9 %}">Septiembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 10 %}">Octubre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 11 %}">Noviembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' current_year 12 %}">Diciembre</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Año {{ last_year }}
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group">
+                      <li class="list-group-item active-2" aria-current="true">
+                        <a class="link-light" href="{% url 'circuitos:torneos-year-month' last_year 1 %}">Enero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 2 %}">Febrero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 3 %}">Marzo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 4 %}">Abril</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 5 %}">Mayo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 6 %}">Junio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 7 %}">Julio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 8 %}">Agosto</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 9 %}">Septiembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 10 %}">Octubre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 11 %}">Noviembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' last_year 12 %}">Diciembre</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    Año {{ before_last_year }}
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group">
+                      <li class="list-group-item active-2" aria-current="true">
+                        <a class="link-light" href="{% url 'circuitos:torneos-year-month' before_last_year 1 %}">Enero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 2 %}">Febrero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 3 %}">Marzo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 4 %}">Abril</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 5 %}">Mayo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 6 %}">Junio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 7 %}">Julio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 8 %}">Agosto</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 9 %}">Septiembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 10 %}">Octubre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 11 %}">Noviembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'circuitos:torneos-year-month' before_last_year 12 %}">Diciembre</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- fin accordion -->
+          </div>  <!-- fin sticky -->
+        </div>  <!-- fin col -->
+      </div> <!-- fin row -->
+    </section>{% endblock main %}
+
+    {% block javascript %}
+    <script type="text/javascript" src="{% static 'core/js/datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'core/js/dataTables.responsive.min.js' %}"></script>{% endblock javascript %}
+
+    {% block extra %}<!-- JavaScript para cada página -->
+    <script>
+      $(document).ready(function () {
+        $("#current-month").DataTable({
+          searching: true,
+          language: {
+            url: "{% static 'core/json/es-ES.json' %}"
+          },
+          ordering: false,
+          responsive: true,
+        });
+      });
+    </script>{% endblock extra %}

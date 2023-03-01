@@ -1,0 +1,8 @@
+Modelo de Circular:
+Título
+slug (título)
+Fecha de la circular
+Fecha creación
+Fecha actualización
+Autores/Autor -->(ManyToMany/Foreignkey) voy en principio a poner Foreignkey, esto tengo que preguntar a Miguel Angel.
+pdf

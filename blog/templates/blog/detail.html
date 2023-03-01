@@ -1,0 +1,68 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Blog | {{ post.title }}{% endblock title %}
+{% block css %}<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">{% endblock css %}
+{% block csspage %}<link rel="stylesheet" href="{% static 'blog/css/blogstyle.css' %}" />{% endblock csspage %}
+
+{% block section %}
+<div class="bg-post-detail" style="background-image: radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.02), #322381),
+    url('{{ post.image.url }}');">
+  <div class="py-5">
+    <!-- Imagen de fondo que tiene el post como cabecera -->
+  </div>
+</div>
+
+<div class="b-example-divider"></div>{% endblock section %}
+
+{% block main %}<div class="container-page-wrap mt-5">
+  <!-- Breadcrumbs -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'blog:post-list' %}">Blog</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="articles-and-sidebar">
+    <main>
+      <article class="mt-3">
+        <header class="mega-header">
+          <h1 class="article-title">{{ post.title }}</h1>
+          <div class="author-row">
+            <p>
+              <img src="{% static 'blog/img/avatar.jpeg' %}" class="avatar" alt="Avatar autor">
+            </p>
+            <div><p class="author-name">{{ post.author }} {{ post.publish|date:"j F Y" }}</p></div>
+          </div>
+        </header>
+        <div class="article-content bg-light shadow-lg">
+          {{ post.body|safe }}
+        </div>
+      </article>
+    </main>
+
+    <aside class="sidebar article-detail">
+      <div class="single-module">
+        <div class="module">
+          <a href="#">
+            <img src="{% static 'blog/img/promo-1.jpg' %}" alt="imagen-patrocinador">
+          </a>
+        </div>
+        <div class="interlude">
+          <a href="#"><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis voluptates.</p></a>
+        </div>
+      </div>
+      <div class="single-module">
+        <div class="module">
+          <a href="#">
+            <img src="{% static 'blog/img/promo-2.png' %}" alt="imagen-patrocinador">
+          </a>
+        </div>
+        <div class="interlude">
+          <a href="#"><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis voluptates.</p></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>{% endblock main %}

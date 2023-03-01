@@ -1,0 +1,131 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Búsqueda Normativas | Ajedrez Málaga{% endblock title %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'core/css/pdfjs-viewer.min.css' %}" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">{% endblock css %}
+
+{% block csspage %}<link rel="stylesheet" href="{% static 'normativa/css/circular.css' %}" />{% endblock csspage %}
+
+{% block breadcrumb %}<!-- Breadcrumb -->
+<div class="container my-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'normativa:circulares' %}">Circulares</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Búsqueda</li>
+    </ol>
+  </nav>
+</div>{% endblock breadcrumb %}
+
+{% block section %}<!-- Modal Pdf -->
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pdfModalLabel">{{ circular.title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- <iframe src="" frameborder="0" width="100%" height="400px"></iframe> -->
+        <div class="pdftoolbar text-center row m-0 p-0">
+          <div class="col-12 col-lg-6 my-1">
+            <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('out')"><span
+                class="material-icons">zoom_out</span></button>
+            <span class="zoomval">100%</span>
+            <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('in')"><span
+                class="material-icons">zoom_in</span></button>
+            <button class="btn btn-secondary btn-sm ms-3" onclick="pdfViewer.setZoom('width')"><span
+                class="material-icons">swap_horiz</span></button>
+            <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('height')"><span
+                class="material-icons">swap_vert</span></button>
+            <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('fit')"><span
+                class="material-icons">fit_screen</span></button>
+          </div>
+        </div>
+        <div class="pdfjs-viewer"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div><!-- fin modal -->
+
+<section class="container px-4 mb-5">
+  <h1 class="display-5 fw-bold text-blue-gradient text-center py-5">
+    Resultados de la búsqueda
+  </h1>
+  <div class="row g-5">
+    <div class="col">
+      <div class="grid-fit">
+        {% for circular in results %}
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>{{ circular.title }}</h5></div>
+            <div class="item-name"><p>{{ circular.publish|date:"j F Y" }}</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                data-bs-whatever="{{ circular.file_pdf.url }}" data-bs-title="{{ circular.title }}">
+                Leer circular
+              </button>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h3>¡Vaya!, parece que no hay resultados.</h3>
+        {% endfor %}
+      </div>  <!-- end grid-fit -->
+      <!-- {% if circulares %}{% include "core/pagination.html" with page=circulares %}{% endif %} -->
+    </div>  <!-- fin col -->
+  </div>  <!-- fin row -->
+  {% if not results %}
+  <div class="row mt-3">
+    <!-- Búsqueda -->
+    <form action="{% url 'normativa:circular_search' %}" method="GET" class="d-flex">
+      {{ form.query }}
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+  </div>
+  {% endif %}
+</section>{% endblock section %}
+
+{% block javascript %}<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+<script>
+  var pdfjsLib = window['pdfjs-dist/build/pdf'];
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+</script>
+<script src="{% static 'core/js/pdfjs-viewer.min.js' %}"></script>
+<script>
+  var pdfModal = document.getElementById('pdfModal')
+  let pdfViewer = new PDFjsViewer($('.pdfjs-viewer'), {
+    onZoomChange: function (zoom) {
+      zoom = parseInt(zoom * 10000) / 100;
+      $('.zoomval').text(zoom + '%');
+    },
+    onActivePageChanged: function (page, pageno) {
+      $('.pageno').text(pageno + '/' + this.getPageCount());
+    }
+  });
+  pdfModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    var recipient = button.getAttribute('data-bs-whatever')
+    var title = button.getAttribute('data-bs-title')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = pdfModal.querySelector('.modal-title')
+    // var modalBodyIframe = pdfModal.querySelector('.modal-body iframe')
+
+    modalTitle.textContent = title
+    // modalBodyIframe.src = recipient
+    pdfViewer.loadDocument(recipient).then(function () {
+      pdfViewer.setZoom('fit');
+    });
+  })
+</script>{% endblock javascript %}

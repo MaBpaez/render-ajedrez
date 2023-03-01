@@ -1,0 +1,110 @@
+    {% extends "core/base.html" %}
+    {% load static %}
+
+    {% block title %}Blog | Ajedrez Málaga{% endblock title %}
+    {% block css %}<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">{% endblock css %}
+    {% block csspage %}<link rel="stylesheet" href="{% static 'blog/css/blogstyle.css' %}" />{% endblock csspage %}
+
+    {% block section %}
+    <div class="bg-purple text-secondary px-4 py-5 text-center">
+      <div class="py-5">
+        <!-- left -->
+        <div class="left-header-blog">
+          <div>
+            <img src="{% static 'blog/img/left.webp' %}" alt="">
+          </div>
+        </div>
+        <!-- title -->
+        <div class="title-header-blog">
+          <img src="{% static 'blog/img/title.webp' %}" alt="Blog de Ajedrez">
+        </div>
+        <!-- right -->
+        <div class="right-header-blog">
+          <div>
+            <img src="{% static 'blog/img/right.webp' %}" alt="">
+          </div>
+        </div>
+        <!--
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Custom button</button>
+          <button type="button" class="btn btn-outline-light btn-lg px-4">Secondary</button>
+        </div>
+        -->
+      </div>
+    </div>
+
+    <div class="b-example-divider"></div>{% endblock section %}
+
+    {% block main %}<div class="container-page-wrap mt-5">
+      <!-- Breadcrumbs -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Blog</li>
+        </ol>
+      </nav>
+
+      <!-- barra de búsqueda -->
+      <header class="page-header col-md-6 mt-2">
+        <div class="row mb-5">
+          <form action="{% url 'blog:post_search' %}" method="GET" class="d-flex">
+            {{ form.query }}
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+        </div>
+      </header>
+
+      <div class="articles-and-sidebar" id="intro-posts">
+        <main class="articles-wrapper">
+          <!-- Articles -->
+          <div class="article-grid">
+            {% for post in posts %}
+            <article class="article-card article anim4 intro-post">
+              <div class="article-thumbnail-wrap">
+                <a href="{{ post.get_absolute_url }}">
+                  <img src="{{ post.image.url }}" alt="{{ post.title }}" class="article-thumbnail">
+                </a>
+              </div>
+              <div class="article-article">
+                <header class="article-publication-meta">
+                  <div class="tags">
+                    {% for tag in post.tags.all %}
+                      <a href="{% url 'blog:post_list_by_tag' tag.slug %}"><span>{{ tag.name }}</span></a>
+                      {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </div>
+                </header>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                <div class="card-content">
+                  <p>{{ post.body|truncatewords_html:22|safe }}</p>
+                </div>
+                <div class="author-row">
+                  <p>
+                    <img src="{% static 'blog/img/avatar.jpeg' %}" class="avatar" alt="Avatar autor">
+                  </p>
+                  <div><p class="author-name">{{ post.author }} {{ post.publish|date:"j F Y" }}</p></div>
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+
+          <!-- Pagination -->
+          {% if posts %}{% include "core/pagination.html" with page=posts %}{% endif %}
+        </main>
+
+        <!-- categorías -->
+        <aside class="sidebar">
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action bg-success text-center text-light text-uppercase" aria-current="true">
+              categorías
+            </button>
+          </div>
+          {% load blog_tags %}
+          {% show_latest_categories %}
+        </aside>
+      </div>
+    </div>{% endblock main %}
+
+    {% block javascript %}<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>{% endblock javascript %}
+    {% block extra %}<script src="{% static 'blog/js/animBlog.js' %}"></script>{% endblock extra %}

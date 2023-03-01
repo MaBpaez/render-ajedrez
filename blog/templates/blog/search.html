@@ -1,0 +1,69 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Búsqueda Artículos | Ajedrez Málaga{% endblock title %}
+
+{% block css %}<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">{% endblock css %}
+
+{% block csspage %}<link rel="stylesheet" href="{% static 'blog/css/blogstyle.css' %}" />{% endblock csspage %}
+
+{% block breadcrumb %}<!-- Breadcrumb -->
+<div class="container my-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'blog:post-list' %}">Blog</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Búsqueda</li>
+    </ol>
+  </nav>
+</div>{% endblock breadcrumb %}
+
+{% block section %}
+<section class="container px-4 mb-5">
+  <h1 class="display-5 fw-bold text-blue-gradient text-center py-5">
+    Resultados de la búsqueda
+  </h1>
+  <div class="grid-fit">
+        {% for post in results %}
+        <article class="article-card article anim4 intro-post">
+              <div class="article-thumbnail-wrap">
+                <a href="{{ post.get_absolute_url }}">
+                  <img src="{{ post.image.url }}" alt="{{ post.title }}" class="article-thumbnail">
+                </a>
+              </div>
+              <div class="article-article">
+                <header class="article-publication-meta">
+                  <div class="tags">
+                    {% for tag in post.tags.all %}
+                      <a href="{% url 'blog:post_list_by_tag' tag.slug %}"><span>{{ tag.name }}</span></a>
+                      {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </div>
+                </header>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                <div class="card-content">
+                  <p>{{ post.body|truncatewords_html:22|safe }}</p>
+                </div>
+                <div class="author-row">
+                  <p>
+                    <img src="{% static 'blog/img/avatar.jpeg' %}" class="avatar" alt="Avatar autor">
+                  </p>
+                  <div><p class="author-name">{{ post.author }} {{ post.publish|date:"j F Y" }}</p></div>
+                </div>
+              </div>
+            </article>
+        {% empty %}
+        <h3>¡Vaya!, parece que no hay resultados.</h3>
+        {% endfor %}
+      <!-- {% if circulares %}{% include "core/pagination.html" with page=circulares %}{% endif %} -->
+  </div>  <!-- fin article grid -->
+  {% if not results %}
+  <div class="row mt-3">
+    <!-- Búsqueda -->
+    <form action="{% url 'blog:post_search' %}" method="GET" class="d-flex">
+      {{ form.query }}
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+  </div>
+  {% endif %}
+</section>{% endblock section %}

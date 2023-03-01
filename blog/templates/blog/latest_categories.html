@@ -1,0 +1,12 @@
+<ul class="list-group list-group-flush mt-2">
+  {% for category in latest_categories %}
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">
+        <a href="{% url 'blog:category' category.id  category.name|slugify %}">{{ category.name }}</a>
+      </div>
+    </div>
+    <span class="badge bg-warning rounded-pill text-dark">{{ category.get_posts.all.count }}</span>
+  </li>
+  {% endfor %}
+</ul>

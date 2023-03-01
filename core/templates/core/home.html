@@ -1,0 +1,461 @@
+    {% extends "core/base.html" %}
+    {% load static %}
+
+    {% block title %}Inicio | Ajedrez Málaga{% endblock title %}
+
+    {% block css %}<link rel="stylesheet" href="{% static 'core/css/datatables.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'core/css/pdfjs-viewer.min.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'core/css/responsive.dataTables.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'core/fullcalendar/lib/main.css' %}" />{% endblock css%}
+    {% block csspage %}<link rel="stylesheet" href="{% static 'core/css/home.css' %}" />{% endblock csspage %}
+
+    {%block carrusel %}<!-- Carrusel -->
+    <section class="test" id="intro-home">
+      <div class="container col-xxl-8 px-4">
+        <div class="row flex-lg-row-reverse align-items-center g-5">
+          <div class="col-10 col-sm-8 col-lg-6" id="intro-home-image">
+            <img
+              src="{% static 'core/img/ajedrez_malaga.png' %}"
+              class="d-block mx-lg-auto img-fluid"
+              alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3 text-light text-shw anim1">Patrocinadores</h1>
+            <p class="lead text-light text-shw anim1" id="my-sticky-element">
+              Todo el que desee sumar, en nuestro compromiso por la difusión y la práctica del ajedrez, será bienvenido
+              y su aportación muy agradecida, pues nuestra fuerza será mayor y nuestro alcance también.
+              Si quieres ser colaborador o patrocinador de nuestro proyecto, sólo tienes que contactar con nosotros.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start anim1">
+              <a class="btn btn-success btn-lg px-4 me-md-2" href="{% url 'contacto:contact' %}">Contactar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>{% endblock carrusel %}
+
+    {% block section %}<!-- Modal Pdf -->
+    <section class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="pdfModalLabel">Nombre circular</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- <iframe src="" frameborder="0" width="100%" height="400px"></iframe> -->
+            <div class="pdftoolbar text-center row m-0 p-0">
+              <div class="col-12 col-lg-6 my-1">
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('out')"><span
+                    class="material-icons">zoom_out</span></button>
+                <span class="zoomval">100%</span>
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('in')"><span
+                    class="material-icons">zoom_in</span></button>
+                <button class="btn btn-secondary btn-sm ms-3" onclick="pdfViewer.setZoom('width')"><span
+                    class="material-icons">swap_horiz</span></button>
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('height')"><span
+                    class="material-icons">swap_vert</span></button>
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('fit')"><span
+                    class="material-icons">fit_screen</span></button>
+              </div>
+            </div>
+            <div class="pdfjs-viewer"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <!-- <button type="button" class="btn btn-primary">Send message</button> -->
+          </div>
+        </div>
+      </div>
+    </section>{% endblock section %}
+
+    {% block main %}<div class="container-fluid">
+      <h1 class="text-center fw-bold text-uppercase mt-5 text-purple">Bienvenidos</h1>
+      <p class="mt-3 fs-5 px-4">
+        Como las piezas sobre el tablero forman una familia, que bien engranada puede llevar a grandes gestas, todos
+        nosotros, aficionados y aficionadas malagueños a este noble juego, formamos una gran familia en la que podemos
+        sumar para fortalecer el ajedrez a todos los niveles.
+      </p>
+      <p class="mt-3 fs-5 px-4">
+        En la apertura de esta partida nuestros valores cobran gran importancia; si llegamos al medio juego podremos
+        ser ejemplo de esfuerzo y entrega en las esferas locales donde desarrollamos nuestra actividad (formativa,
+        competitiva, lúdica, cultural...); y el final, será una buena ocasión para dar apoyo a nuestros clubes y clubes
+        hermanos en la construcción de proyectos comunes.
+      </p>
+      <p class="mb-5 fs-5 px-4 text-center"><cite>"Gens Una Sumus"</cite> (Lema de la FIDE).</p>
+    </div>
+
+    <!-- Torneos -->
+    <section class="bg-light text-secondary px-4 pt-5">
+      <div class="container-fluid" id="tablero-ajedrez">
+        <div class="row flex-lg-row-reverse g-5">
+          <div class="col-lg-6 torneo-home">
+            <div class="shape-morph">
+              <img src="{% static 'core/img/morph_purple.svg' %}" alt="Ajedrez Málaga" class="anim3">
+            </div>
+            <div class="tablero">
+              <img src="{% static 'core/img/tablero_ajedrez.webp' %}" alt="Tablero de ajedrez" id="tablero-ajedrez-image">
+            </div>
+            <div class="col-10 col-sm-8 col-lg-6">
+              <img src="{% static 'core/img/tablero-ajedrez.webp' %}" alt="Tablero de ajedrez Málaga">
+            </div>
+          </div>
+          <div class="col-lg-6 anim2">
+            <h1 class="display-5 fw-bold text-blue-gradient">Torneos</h1>
+            <div>
+              <p class="fs-5 mb-4">
+                Información detallada sobre los torneos de ajedrez que ofrecemos. Nuestro objetivo es fomentar la
+                pasión por el ajedrez y promover la participación en torneos de ajedrez para jugadores de todos los
+                niveles. Descubre nuestros emocionantes torneos de ajedrez.
+              </p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'torneo:agenda' %}" class="btn btn-outline-success btn-lg px-4 me-sm-3 fw-bold"
+                role="button">
+                  Ver torneos
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- end row -->
+      </div>  <!-- end container -->
+    </section>  <!-- end torneos -->
+
+    <div class="b-example-divider"></div>
+
+    <!-- Parallax background -->
+    <div class="section-3-1219"><div class="ct-section-inner-wrap"></div></div>
+
+    <!-- Noticias -->
+    <section class="bg-light text-secondary px-4 py-5 parallax-wrap">
+      <div class="container-fluid">
+        <div class="row align-items-center g-5">
+          <div class="parallax">
+            <span value="-1" data-speed="0.15"><img src="{% static 'core/img/figure-1.png' %}" alt="figura-1" /></span>
+            <span value="1" data-speed="0.1"><img src="{% static 'core/img/figure-2.png' %}" alt="figura-2" /></span>
+            <span value="1" data-speed="0.20"><img src="{% static 'core/img/figure-3.png' %}" alt="figura-3" /></span>
+          </div>
+          <div class="col-10 col-sm-8 col-lg-6 noticias-home">
+            <img src="{% static 'core/img/blog-home.webp' %}" alt="Noticas de ajedrez">
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold text-blue-gradient">Noticias</h1>
+            <div>
+              <p class="fs-5 mb-4">
+                Últimas novedades y acontecimientos relacionados con el mundo del ajedrez. En nuestro blog, podrás
+                encontrar información relevante para jugadores de todos los niveles. Nuestro objetivo es mantenerte
+                informado sobre todo lo que ocurre en el mundo del ajedrez.
+              </p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a
+                href="{% url 'blog:post-list' %}"
+                class="btn btn-outline-success btn-lg px-4 me-sm-3 fw-bold"
+                role="button">
+                  Leer noticias
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- end row -->
+        <h1 class="display-5 fw-bold text-blue-gradient text-center py-5 mytext" id="intro-news">Ajedrez Málaga</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col anim4">
+            <div class="card h-100">
+              <img src="{% static 'core/img/post-1.webp'%}" class="card-img-top" alt="Post 1">
+              <div class="card-body">
+                <h5 class="card-title">Post 1</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><a href="#">Continuar leyendo</a></small>
+              </div>
+            </div>
+          </div>
+          <div class="col anim4">
+            <div class="card h-100">
+              <img src="{% static 'core/img/post-2.webp'%}" class="card-img-top" alt="Post 2">
+              <div class="card-body">
+                <h5 class="card-title">Post 2</h5>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo mi in nibh viverra faucibus
+                  at in ligula. Integer laoreet erat in commodo sodales. Nullam imperdiet augue eget lectus molestie.
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><a href="#">Continuar leyendo</a></small>
+              </div>
+            </div>
+          </div>
+          <div class="col anim4">
+            <div class="card h-100">
+              <img src="{% static 'core/img/carrusel_1.jpg'%}" class="card-img-top" alt="Post 3">
+              <div class="card-body">
+                <h5 class="card-title">Post 3</h5>
+                <p class="card-text">
+                  Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+                  et dui.
+                </p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"><a href="#">Continuar leyendo</a></small>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- end row -->
+      </div>  <!-- end container -->
+    </section>  <!-- end noticias -->
+
+    <div class="b-example-divider"></div>
+
+    <!-- Newsletter -->
+    <section class="container my-5">
+      <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg bg-light">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+          <h1 class="display-4 fw-bold lh-1">Suscríbete para estar informado</h1>
+          <p class="lead">
+            ¡No te pierdas ninguna novedad del apasionante mundo del ajedrez! Suscríbete a nuestra newsletter y recibe
+            en tu correo electrónico las últimas noticias. Mantente al día en todo lo que ocurre en el mundo del
+            ajedrez y mejora tu juego con nuestro contenido exclusivo. ¡Suscríbete ahora y no te pierdas nada!.
+          </p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3 newsletter-subscribe">
+            <form class="d-flex" style="width:100%;">
+              <input class="form-control" type="email" name="email" placeholder="@Email">
+              <button class="btn btn-primary" type="button">Enviar</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+          <img class="rounded-lg-3" src="{% static 'core/img/carrusel_3.jpg' %}" alt="Newsletter" width="720">
+        </div>
+      </div>
+    </section>
+
+    <div class="b-example-divider"></div>
+
+    <!-- Normativas -->
+    <section class="container-fluid px-4 mb-5">
+      <h1 class="display-5 fw-bold text-blue-gradient text-center py-5">Últimas circulares</h1>
+      <div class="grid-fit">
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>Circular 1</h5></div>
+            <div class="item-name"><p>Delegación Málagueña</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                data-bs-whatever="/media/pdf/2022/09/12/torneo_nerja.pdf">
+                Leer circular
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>Circular 2</h5></div>
+            <div class="item-name"><p>Delegación Andaluza</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm">Leer circular</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>Circular 3</h5></div>
+            <div class="item-name"><p>Delegación Andaluza</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm">Leer circular</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>Circular 4</h5></div>
+            <div class="item-name"><p>Delegación Andaluza</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm">Leer circular</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>Circular 5</h5></div>
+            <div class="item-name"><p>Delegación Málaga</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm">Leer circular</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-grid border border-1">
+          <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+          <div class="item-info">
+            <div class="title"><h5>Circular 6</h5></div>
+            <div class="item-name"><p>Delegación Málaga</p></div>
+            <div class="description">
+              <button type="button" class="btn btn-danger btn-sm">Leer circular</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQs -->
+      <h1 class="display-5 fw-bold text-blue-gradient text-center py-5">FAQs</h1>
+      <div class="accordion container" id="accordionPanelsStayOpenFaq">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseOne"
+              aria-expanded="true"
+              aria-controls="panelsStayOpen-collapseOne">
+              Pregunta frecuente #1
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne"
+            class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+              <p>Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+              et dui. <strong>Erat sapien semper quam</strong>, ultricies bibendum augue nulla.</p>
+              <p>Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+              et dui.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseTwo"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseTwo">
+              Pregunta frecuente #2
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body">
+              <p>Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+              et dui. Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue
+              nulla, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+            <button class="accordion-button collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseThree"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseThree">
+              Pregunta frecuente #3
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseThree"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingThree">
+            <div class="accordion-body">
+              Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+              et dui.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+            <button class="accordion-button collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseFour"
+              aria-expanded="true"
+              aria-controls="panelsStayOpen-collapseFour">
+              Pregunta frecuente #4
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseFour"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingFour">
+            <div class="accordion-body">
+              Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+              et dui.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+            <button class="accordion-button collapsed" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseFive"
+              aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseFive">
+              Pregunta frecuente #5
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseFive"
+            class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingFive">
+            <div class="accordion-body">
+              Donec pellentesque, justo id dictum fringilla, erat sapien semper quam, ultricies bibendum augue nulla
+              et dui.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="b-example-divider"></div>
+
+    {% endblock main %}
+
+    {% block extrasection%}<!--<section class="massiveImage-wrapper"><div class="massiveImage"></div></section>-->{% endblock extrasection %}
+
+    {% block javascript %}<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/Flip.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+    <script>
+      var pdfjsLib = window['pdfjs-dist/build/pdf'];
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+    </script>
+    <script src="{% static 'core/js/pdfjs-viewer.min.js' %}"></script>
+    <script>
+      var pdfModal = document.getElementById('pdfModal')
+      let pdfViewer = new PDFjsViewer($('.pdfjs-viewer'), {
+        onZoomChange: function (zoom) {
+          zoom = parseInt(zoom * 10000) / 100;
+          $('.zoomval').text(zoom + '%');
+        },
+        onActivePageChanged: function (page, pageno) {
+          $('.pageno').text(pageno + '/' + this.getPageCount());
+        }
+      });
+      pdfModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var recipient = button.getAttribute('data-bs-whatever')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        // var modalTitle = exampleModal.querySelector('.modal-title')
+        // var modalBodyIframe = pdfModal.querySelector('.modal-body iframe')
+
+        // modalTitle.textContent = 'New message to ' + recipient
+        // modalBodyIframe.src = recipient
+        pdfViewer.loadDocument(recipient).then(function () {
+          pdfViewer.setZoom('fit');
+        });
+      })
+    </script>{% endblock javascript %}
+
+    {% block extra %}<script src="{% static 'core/js/animHome.js' %}"></script>{% endblock extra %}

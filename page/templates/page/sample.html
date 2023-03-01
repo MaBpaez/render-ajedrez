@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{page.title}} | Ajedrez Málaga{% endblock %}
+
+{% block main %}
+  <main>
+    <div class="container mt-5 pt-3">
+      {{ page.content|safe }}
+    </div>
+  </main>
+{% endblock main%}

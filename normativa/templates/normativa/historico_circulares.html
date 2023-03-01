@@ -1,0 +1,272 @@
+    {% extends "core/base.html" %}
+    {% load static %}
+
+    {% block title %}Circulares | Ajedrez Málaga{% endblock title %}
+
+    {% block css %}<link rel="stylesheet" href="{% static 'core/css/pdfjs-viewer.min.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">{% endblock css %}
+
+    {% block csspage %}<link rel="stylesheet" href="{% static 'normativa/css/circular.css' %}" />{% endblock csspage %}
+
+    {% block section %}<!-- Modal Pdf -->
+    <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="pdfModalLabel">{{ circular.title }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- <iframe src="" frameborder="0" width="100%" height="400px"></iframe> -->
+            <div class="pdftoolbar text-center row m-0 p-0">
+              <div class="col-12 col-lg-6 my-1">
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('out')"><span
+                    class="material-icons">zoom_out</span></button>
+                <span class="zoomval">100%</span>
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('in')"><span
+                    class="material-icons">zoom_in</span></button>
+                <button class="btn btn-secondary btn-sm ms-3" onclick="pdfViewer.setZoom('width')"><span
+                    class="material-icons">swap_horiz</span></button>
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('height')"><span
+                    class="material-icons">swap_vert</span></button>
+                <button class="btn btn-secondary btn-sm" onclick="pdfViewer.setZoom('fit')"><span
+                    class="material-icons">fit_screen</span></button>
+              </div>
+            </div>
+            <div class="pdfjs-viewer"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div><!-- fin modal -->
+
+    <section class="container px-4 mb-5">
+      <h1 class="display-5 fw-bold text-blue-gradient text-center py-5">Circulares</h1>
+      <div class="row g-5">
+        <div class="col-md-9">
+          <div class="grid-fit">
+            {% for circular in circulares %}
+            <div class="item-grid border border-1">
+              <div class="img-wrapper"><img src="{% static 'core/img/pdf.webp' %}" alt="img placeholder" /></div>
+              <div class="item-info">
+                <div class="title"><h5>{{ circular.title }}</h5></div>
+                <div class="item-name"><p>{{ circular.publish|date:"j F Y" }}</p></div>
+                <div class="description">
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#pdfModal"
+                    data-bs-whatever="{{ circular.file_pdf.url }}" data-bs-title="{{ circular.title }}">
+                    Leer circular
+                  </button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>  <!-- end grid-fit -->
+          {% include "core/pagination.html" with page=circulares %}
+        </div>  <!-- fin col -->
+
+        <div class="col-md-3">
+          <h3 class="text-center">Históricos</h3>
+            <div class="text-center my-3">
+              <a class="btn btn-chess" href="{% url 'normativa:circulares' %}"
+                role="button">Todas las circulares
+              </a>
+            </div>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Año {{ current_year }}
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group">
+                      <li class="list-group-item active-2" aria-current="true">
+                        <a class="link-light" href="{% url 'normativa:circulares-year-month' current_year 1 %}">Enero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 2 %}">Febrero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 3 %}">Marzo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 4 %}">Abril</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 5 %}">Mayo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normaiva:circulares-year-month' current_year 6 %}">Junio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normaiva:circulares-year-month' current_year 7 %}">Julio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 8 %}">Agosto</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 9 %}">Septiembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 10 %}">Octubre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 11 %}">Noviembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' current_year 12 %}">Diciembre</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Año {{ last_year }}
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group">
+                      <li class="list-group-item active-2" aria-current="true">
+                        <a class="link-light" href="{% url 'normativa:circulares-year-month' last_year 1 %}">Enero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 2 %}">Febrero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 3 %}">Marzo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 4 %}">Abril</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 5 %}">Mayo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 6 %}">Junio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 7 %}">Julio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 8 %}">Agosto</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 9 %}">Septiembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 10 %}">Octubre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 11 %}">Noviembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' last_year 12 %}">Diciembre</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    Año {{ before_last_year }}
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <ul class="list-group">
+                      <li class="list-group-item active-2" aria-current="true">
+                        <a class="link-light" href="{% url 'normativa:circulares-year-month' before_last_year 1 %}">Enero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 2 %}">Febrero</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 3 %}">Marzo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 4 %}">Abril</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 5 %}">Mayo</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 6 %}">Junio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 7 %}">Julio</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 8 %}">Agosto</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 9 %}">Septiembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 10 %}">Octubre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 11 %}">Noviembre</a>
+                      </li>
+                      <li class="list-group-item">
+                        <a href="{% url 'normativa:circulares-year-month' before_last_year 12 %}">Diciembre</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- fin accordion -->
+        </div>  <!-- fin col -->
+      </div>  <!-- fin row -->
+    </section>{% endblock section %}
+
+    {% block javascript %}<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+    <script>
+      var pdfjsLib = window['pdfjs-dist/build/pdf'];
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+    </script>
+    <script src="{% static 'core/js/pdfjs-viewer.min.js' %}"></script>
+    <script>
+      var pdfModal = document.getElementById('pdfModal')
+      let pdfViewer = new PDFjsViewer($('.pdfjs-viewer'), {
+        onZoomChange: function (zoom) {
+          zoom = parseInt(zoom * 10000) / 100;
+          $('.zoomval').text(zoom + '%');
+        },
+        onActivePageChanged: function (page, pageno) {
+          $('.pageno').text(pageno + '/' + this.getPageCount());
+        }
+      });
+      pdfModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        var recipient = button.getAttribute('data-bs-whatever')
+        var title = button.getAttribute('data-bs-title')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        var modalTitle = pdfModal.querySelector('.modal-title')
+        // var modalBodyIframe = pdfModal.querySelector('.modal-body iframe')
+
+        modalTitle.textContent = title
+        // modalBodyIframe.src = recipient
+        pdfViewer.loadDocument(recipient).then(function () {
+          pdfViewer.setZoom('fit');
+        });
+      })
+    </script>{% endblock javascript %}
+

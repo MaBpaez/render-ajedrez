@@ -1,0 +1,193 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Cicuito | Diputación{% endblock title %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'core/fullcalendar/lib/main.css' %}" />{% endblock css %}
+{% block csspage %}<link rel="stylesheet" href="{% static 'circuitos/css/circuitos.css' %}"/>{% endblock csspage %}
+
+{% block section %}<section>
+    <div class="container col-xxl-8 px-4 pb-5 pt-3">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+          <img
+            src="{% static 'circuitos/img/circuito_ajedrez.webp' %}"
+            class="d-block mx-lg-auto img-fluid rounded"
+            alt="Circuito Diputación Málaga"
+            width="700"
+            height="500"
+            loading="lazy"
+          />
+        </div>
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold lh-1 mb-3">Cicuitos de la Diputación</h1>
+          <p class="lead">
+            Con el buen tiempo llega el Circuito Provincial de la Diputación de Málaga, y nada mejor que disfrutarlo
+            jugando al ajedrez y recorriendo los numerosos pueblos malagueños adheridos al Circuito.
+          </p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="container">
+      <div class="row">
+        <div id='calendar'></div>
+      </div>
+    </div>
+    <br><br><br>
+
+    <div class="b-example-divider"></div>
+  </section>{% endblock section %}
+
+{% block breadcrumb %}<div class="container my-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'torneo:inicio' %}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Circuito Diputación</li>
+      </ol>
+    </nav>
+    <!-- End breadcrumb -->
+  </div>{% endblock breadcrumb %}
+
+{% block main %}<main class="container my-5">
+    <div class="tournaments-and-sidebar">
+      <div class="tournaments-of-diputacion">
+        <div class="card">
+          <div class="card-body">
+            <nav class="navbar navbar-light bg-light mb-4">
+              <div class="container-fluid">
+                <!-- Buscador -->
+                <form action="{% url 'circuitos:circuito_search' %}" method="GET" class="d-flex">
+                  {{ form.query }}
+                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+                <!-- fin buscador -->
+                <ul class="nav justify-content-end">
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      href="#"
+                      role="button"
+                      aria-expanded="false"
+                    >Seleccionar</a
+                    >
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a class="dropdown-item"
+                           href="{% url 'circuitos:new_tournaments' %}">Nuevos
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item"
+                           href="{% url 'circuitos:tournaments_in_progress' %}">En curso
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item"
+                           href="{% url 'circuitos:finished_tournaments' %}">Finalizados
+                        </a>
+                      </li>
+                      <li>
+                        <hr class="dropdown-divider"/>
+                      </li>
+                      <li><a class="dropdown-item" href="{% url 'circuitos:all_tournaments' %}">Todos</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <h5 class="card-title text-center mb-3">Torneos de la diputación {% if tipo_torneo %}({{ tipo_torneo }}){% endif %}</h5>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead class="table-dark-blue">
+                <tr>
+                  <th scope="col">Inicio</th>
+                  <th scope="col">Final</th>
+                  <th scope="col">Torneo</th>
+                  <th scope="col">Localidad</th>
+                  <th scope="col">Provincia</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for torneo in torneos %}
+                  <tr>
+                    <th scope="row">{{ torneo.start|date:"SHORT_DATE_FORMAT" }}</th>
+                    <td>{{ torneo.finish|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td><a href="{{ torneo.get_absolute_url }}">{{ torneo.title }}</a></td>
+                    <td>{{ torneo.location }}</td>
+                    <td>{{ torneo.province }}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- end table-responsive -->
+          </div>
+          <!-- end card-body -->
+        </div>
+        <!-- end card -->
+        <!-- Pagination -->
+       {% if torneos %}{% include "circuitos/pagination.html" with page=torneos %}{% endif %}
+        <!-- end pagination -->
+      </div>
+      <!-- end tournaments-of-diputacion -->
+
+      <div class="sidebar-of-advertising">
+        <div class="single-module">
+          <div class="module">
+            <a href="#">
+              <img src="{% static 'blog/img/promo-1.jpg' %}" alt="imagen-patrocinador">
+            </a>
+          </div>
+          <div class="interlude">
+            <a href="#"><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis voluptates.</p></a>
+          </div>
+        </div>
+        <div class="single-module">
+          <div class="module">
+            <a href="#">
+              <img src="{% static 'blog/img/promo-2.png' %}" alt="imagen-patrocinador">
+            </a>
+          </div>
+          <div class="interlude">
+            <a href="#"><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis voluptates.</p></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end tournaments-and-sidebar -->
+  </main>{% endblock main %}
+
+{% block javascript %}<script type="text/javascript" src="{% static 'core/fullcalendar/lib/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'core/fullcalendar/lib/locales/es.js' %}"></script>{% endblock javascript %}
+
+{% block extra %}<!-- Javascript para Calendar -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          themeSystem: 'standard',  // default
+          headerToolbar: { center: 'dayGridMonth,timeGridWeek' }, // buttons for switching between views
+          initialView: 'dayGridMonth',  // default
+          contentHeight: 450,
+
+          events: [
+           {% for torneo in torneos_mes_actual %}
+             {
+               title: "{{ torneo.title }}",
+               start: '{{ torneo.start | date:"Y-m-d" }}',
+               url: '{{ torneo.get_absolute_url }}',
+             },
+           {% endfor %}
+          ]
+        });
+        calendar.setOption('locale', 'es');
+        calendar.render();
+      });
+    </script>{% endblock extra %}
+</body>
+</html>
