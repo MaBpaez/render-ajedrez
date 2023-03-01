@@ -1,0 +1,18 @@
+.hero-historico {
+  background-image: url("../img/historico_circuito_diputacion_malaga.d6878c188bff.webp");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  min-height: 500px;
+}
+
+.hero-historico h1 {
+  color: #41c3a3;
+  top: 30%;
+}
+
+@media screen and (max-width: 800px) {
+  .hero-historico {
+    min-height: 400px;
+  }
+}

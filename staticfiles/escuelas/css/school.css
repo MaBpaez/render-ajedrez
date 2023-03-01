@@ -1,0 +1,20 @@
+.card-body figure.figure {
+  align-self: baseline;
+}
+
+.grid-header-escuela {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 60px;
+  align-items: center;
+}
+
+.grid-header-escuela img {
+  object-fit: contain;
+  height: 100%;
+  justify-self: flex-end;
+}
+
+.grid-header-escuela h5 {
+  margin: 0;
+}

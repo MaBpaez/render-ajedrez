@@ -165,8 +165,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+if not DEBUG:
+	STATIC_ROOT = BASE_DIR / 'staticfiles'
+	STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media config
 MEDIA_URL = '/media/'
@@ -200,4 +201,4 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Celery
-CELERY_BROKER_URL = 'redis://default:L0OeBI4gunNhUWkQYgVs@containers-us-west-174.railway.app:5467'
+# CELERY_BROKER_URL = 'redis://default:L0OeBI4gunNhUWkQYgVs@containers-us-west-174.railway.app:5467'

@@ -1,0 +1,56 @@
+.pdftoolbar button {
+  background-color: #0d6efd;
+  width: 25px;
+}
+
+.pdftoolbar span {
+  font-size: 12px;
+}
+
+.pdfjs-viewer {
+  overflow: auto;
+  border: 1px solid #aaa;
+  background: #ccc;
+  height: 500px !important;
+}
+
+.pdftoolbar {
+  width: 100%;
+  height: auto;
+  background-color: #d7dfde;
+  z-index: 100;
+}
+
+.accordion-item p > img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.b-example-divider {
+  height: 3rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: solid rgba(0, 0, 0, 0.15);
+  border-width: 1px 0;
+  box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 992px) {
+  .rounded-lg-3 {
+    border-radius: 0.3rem;
+  }
+}

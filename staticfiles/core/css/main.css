@@ -1,0 +1,401 @@
+:root {
+  --nav-link-active: #e7f3ff;
+  --background-link-active: #322381;
+  --nav-link-hover: #1181e8;
+  --bs-list-group-item-padding-y: 0.5rem;
+  --bs-list-group-item-padding-x: 1rem;
+  --max-width: 1248px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* background-color: #f4f3f0; */
+  background-color: #f8f8f8;
+  overflow-x: hidden;
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.shadow-sm {
+  -webkit-box-shadow: 0 8px 12px 0 rgb(29 17 51 / 4%), 0 3px 16px 0 rgb(9 32 77 / 12%), 0 5px 10px 0 rgb(29 17 51 / 12%) !important;
+  box-shadow: 0 8px 12px 0 rgb(29 17 51 / 4%), 0 3px 16px 0 rgb(9 32 77 / 12%), 0 5px 10px 0 rgb(29 17 51 / 12%) !important;
+}
+
+/*
+ * ─── TIPOGRAFIAS ───
+ */
+
+/* MDBPrimer Bold  */
+
+@font-face {
+  font-family: "Primer";
+  font-weight: 700;
+  src: local("Primer"), url("../font/MDPrimer-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "cervo";
+  font-weight: 700;
+  src: local("cervo"), url("../font/Cervo.woff2") format("woff2");
+}
+
+.fprimer {
+  font-family: "Primer", sans-serif;
+  font-style: normal;
+  text-shadow: 0 2px 2px rgb(0 0 0 / 50%);
+  /*font-size: clamp(1.2rem,1rem + 3.5vw,4rem);*/
+}
+
+/* Pagination */
+.active > .page-link,
+.page-link.active {
+  z-index: 3;
+  color: var(--bs-pagination-active-color);
+  background-color: #322381;
+  border-color: #322381;
+}
+
+.page-link {
+  color: #322381;
+}
+
+.test {
+  background: rgb(73, 30, 255);
+  background: linear-gradient(171deg, rgba(73, 30, 255, 1) 0%, rgba(160, 22, 188, 1) 48%, rgba(222, 108, 220, 1) 100%);
+}
+
+.text-shw {
+  text-shadow: 0 3px 3px rgb(0 0 0 / 50%);
+}
+
+.text-purple {
+  color: #532980 !important;
+}
+
+.text-blue-gradient {
+  background: -webkit-linear-gradient(45deg, #322381, #532980);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-chess {
+  background-color: #322381;
+}
+
+.btn-chess {
+  color: #fff;
+  background-color: #322381ed;
+  border-color: #322381ed;
+  box-shadow: rgb(49, 132, 253);
+}
+
+.btn-chess:hover {
+  color: #fff;
+  background-color: #322381;
+  border-color: #322381;
+}
+
+.b-example-divider {
+  height: 3rem;
+  background: linear-gradient(171deg, rgba(73, 30, 255, 1) 0%, rgba(160, 22, 188, 1) 48%, rgba(222, 108, 220, 1) 100%);
+  border: solid rgba(0, 0, 0, 0.15);
+  border-width: 1px 0;
+  box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%), inset 0 0.125em 0.5em rgb(0 0 0 / 15%);
+}
+
+.max-width {
+  max-width: var(--max-width);
+}
+
+@font-face {
+  font-family: "Permanent_Marker";
+  font-weight: 400;
+  src: local("Permanent_Marker"), url("../font/Permanent_Marker/PermanentMarker-Regular.woff2") format("woff2");
+}
+
+/*
+ * ─── BACK TO TOP ───
+ */
+
+#back2Top {
+  width: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  z-index: 999;
+  display: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  text-align: center;
+  font-size: 30px;
+  text-decoration: none;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+}
+
+/*
+.gap {
+  gap: 12px;
+}*/
+
+/* Iconos externos */
+.vertical-icon {
+  height: 16px;
+  vertical-align: text-top;
+  width: 16px;
+}
+
+/* Newsletter Footer */
+.newsletter-subscribe {
+  color: #313437;
+}
+
+.newsletter-subscribe p {
+  color: #495057;
+  line-height: 1.5;
+}
+
+.newsletter-subscribe .intro p {
+  margin-bottom: 22px;
+}
+
+.newsletter-subscribe form .form-control {
+  margin-right: 10px;
+}
+
+.newsletter-subscribe form .btn {
+  padding: 16px 32px;
+  border: none;
+  background: none;
+  box-shadow: none;
+  text-shadow: none;
+  opacity: 0.9;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  line-height: 1;
+}
+
+.newsletter-subscribe form .btn:hover {
+  opacity: 1;
+}
+
+.newsletter-subscribe form .btn:active {
+  transform: translateY(1px);
+}
+
+.newsletter-subscribe form .btn-primary {
+  background-color: #322381 !important;
+  color: #fff;
+  outline: none !important;
+}
+
+.newsletter {
+  color: #0062cc !important;
+}
+
+/* FullCalendar */
+.fc .fc-button {
+  padding: 0.2em 0.45em;
+}
+
+/* Menú de navegación */
+.navbar-brand {
+  background-image: url("../img/logo.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 76px;
+  margin-right: 0;
+  position: relative;
+  padding: 0;
+  width: 100px;
+}
+
+/* De esta forma para cuando tengamos más opciones en el menú de navegación */
+a.navbar-brand::after {
+  position: absolute;
+  color: #322381;
+  top: 7%;
+  content: "Delegación \A Malagueña \A de Ajedrez";
+  font-size: 16px;
+  font-weight: 600;
+  left: 100%;
+  white-space: pre-wrap;
+}
+
+.nav-link {
+  color: rgba(50, 35, 129, 0.88);
+}
+
+.navbar-nav .nav-link.active {
+  background-color: var(--background-link-active);
+  color: #fff;
+  border-radius: 6px;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: var(--nav-link-hover);
+}
+
+.nav-link:hover {
+  background-color: var(--nav-link-active);
+  border-radius: 6px;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: var(--nav-link-hover);
+  background-color: var(--nav-link-active);
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  color: var(--bs-dropdown-link-active-color);
+  text-decoration: none;
+  background-color: #6ec967;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  color: var(--bs-list-group-active-color);
+  background-color: #6ec967;
+  border-color: #6ec967;
+}
+
+.list-group-item.active-2 {
+  z-index: 2;
+  color: var(--bs-list-group-active-color);
+  background-color: var(--background-link-active);
+  border-color: var(--background-link-active);
+}
+
+.nav-item {
+  margin: 0 5px;
+}
+
+.nav-link {
+  padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x);
+}
+
+.alert-nuevo {
+  color: white;
+  background-color: #6ec967;
+  border-color: #6ec967;
+}
+
+.alert-curso {
+  color: white;
+  background-color: rebeccapurple;
+  border-color: rebeccapurple;
+}
+
+.alert-finalizado {
+  color: white;
+  background-color: indianred;
+  border-color: indianred;
+}
+
+/* Footer */
+footer {
+  position: relative;
+  overflow-x: hidden;
+  font-size: 15px;
+  z-index: 1;
+}
+
+footer::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 50%;
+  width: 50%;
+  background-image: url("../img/newsletter-2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 25% bottom;
+  z-index: -1;
+}
+
+.bd-footer a,
+.bd-footer p {
+  color: #495057;
+  text-decoration: none;
+}
+
+.bd-footer a:hover {
+  color: var(--nav-link-hover);
+}
+
+.redes-sociales a {
+  display: block;
+}
+
+.redes-sociales li:first-child a:hover {
+  color: #1877f2;
+}
+
+.bi-instagram {
+  font-size: 22px;
+}
+
+.bi-instagram::before {
+  vertical-align: 0.015em;
+}
+
+.redes-sociales li:nth-child(2) a:hover {
+  background: linear-gradient(130deg, #ff7a18, #af002d 41.07%, #319197 76.05%);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-shadow: none;
+}
+
+.redes-sociales li:last-child a:hover {
+  color: #179cf0;
+}
+
+/* Media queries */
+/* Fullcalendar */
+@media screen and (max-width: 522px) {
+  .fc .fc-toolbar {
+    flex-direction: column;
+  }
+  .fc-toolbar-chunk {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  footer::after {
+    left: 47%;
+  }
+}
+
+/* Carrusel */
+@media screen and (min-width: 774px) {
+  /* Añadirlo a partir de un breakpoint */
+  .carousel-inner div {
+    height: 600px;
+    object-fit: contain;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .navbar-expand-xl .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+    justify-content: flex-end;
+  }
+}

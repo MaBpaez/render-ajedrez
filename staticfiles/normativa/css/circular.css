@@ -1,0 +1,51 @@
+.pdftoolbar button {
+  background-color: #0d6efd;
+  width: 25px;
+}
+
+.pdftoolbar span {
+  font-size: 12px;
+}
+
+.pdftoolbar {
+  width: 100%;
+  height: auto;
+  background-color: #d7dfde;
+  z-index: 100;
+}
+
+/* Grid fit */
+.grid-fit {
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.item-grid {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-column-gap: 15px;
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
+
+.item-info {
+  color: #6c757d;
+}
+
+.item-name {
+  font-size: var(--bs-body-font-size);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.img-wrapper img {
+  width: 100%;
+  border-radius: 3px;
+}

@@ -1,0 +1,313 @@
+.grid-fit {
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.container-page-wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.bg-purple,
+.bg-post-detail {
+  background-color: #20123a;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-post-detail {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  height: 450px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.title-header-blog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 312px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 452px;
+  z-index: 1;
+}
+
+.left-header-blog {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.right-header-blog {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.title-header-blog img,
+.left-header-blog img,
+.right-header-blog img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.left-header-blog > div,
+.right-header-blog > div {
+  height: 100%;
+  width: 100%;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 1.8rem + 0.2vw, 3rem);
+}
+
+.article-card {
+  background: #fff;
+  color: #474747;
+  border-radius: 8px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.24));
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.24));
+  display: flex;
+  flex-direction: column;
+}
+
+.articles-and-sidebar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 3rem;
+  margin: 0 auto;
+  /* position: relative; */
+}
+
+/* .articles-and-sidebar::before {
+  content:'';
+  position: absolute;
+  background-image: url("../img/bg-moz.e57c64a13bb7.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+} */
+
+.articles-and-sidebar > :not(.sidebar) {
+  align-self: start;
+}
+
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 0 0 var(--gap) 0;
+}
+
+.article-thumbnail-wrap {
+  position: relative;
+}
+
+img.article-thumbnail {
+  height: 250px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+
+.article-article {
+  flex: 1;
+  position: relative;
+  z-index: 5;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-article a {
+  color: #222;
+  text-decoration: none;
+}
+
+.article-article a:hover {
+  color: #565656;
+}
+
+.tags {
+  line-height: 1;
+  margin: 0 0 0.5rem;
+}
+
+.tags a {
+  color: #322381;
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+.author-row {
+  -webkit-margin-before: auto;
+  margin-block-start: auto;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  color: #565656;
+  line-height: 1.3;
+  padding-top: 0.5rem;
+}
+
+.author-row > div > * {
+  white-space: nowrap;
+}
+
+.author-name {
+  font-weight: 700;
+  color: #000;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.sidebar {
+  /*Referencia: https://ishadeed.com/article/position-sticky-css-grid/
+  Position sticky inside css gri
+  To make the sidebar sticky, we need to override the default stretching behavior and make the aside height equal to the content.
+  We can either use align-self on the aside element:*/
+  align-self: start;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 150px;
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+
+.sidebar.article-detail {
+  position: static;
+}
+
+/* Post detail */
+.mega-header {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 0 0 2rem;
+}
+
+.article-title {
+  font-size: clamp(1.2rem, 1rem + 3.5vw, 4rem);
+  /* text-shadow: 0 2px 2px rgb(0 0 0 / 50%); */
+}
+
+.article-content {
+  font-size: 1.2rem;
+  color: #000;
+  overflow-wrap: break-word;
+  border-radius: 8px;
+  padding: 4rem;
+  position: relative;
+}
+
+.single-module {
+  width: 300px;
+  margin: 0 0 3rem 0;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #f0f1f5;
+}
+
+.single-module .module {
+  margin: 0;
+}
+
+.single-module .module img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 0 1.5rem rgb(17 17 17 / 70%);
+}
+
+.interlude {
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 1rem;
+  white-space: normal;
+  text-align: left;
+}
+
+.interlude a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container-video {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  margin: 30px 0;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Media queries */
+@media only screen and (max-height: 700px) {
+  img.article-thumbnail {
+    height: 280px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .container-page-wrap {
+    padding: 0 2rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .articles-and-sidebar {
+    display: block;
+    padding-top: 0;
+  }
+
+  .container-page-wrap {
+    padding: 0 1rem;
+  }
+
+  .sidebar.article-detail {
+    display: none;
+  }
+
+  .article-content {
+    padding: 1.66rem;
+  }
+}

@@ -1,0 +1,218 @@
+.pdftoolbar button {
+  background-color: #0d6efd;
+  width: 25px;
+}
+
+.pdftoolbar span {
+  font-size: 12px;
+}
+
+.pdftoolbar {
+  width: 100%;
+  height: auto;
+  background-color: #d7dfde;
+  z-index: 100;
+}
+
+.massiveImage {
+  height: 100vh;
+  width: 400vw;
+  background-image: url("../img/carrusel_ajedrez.50f153e8dfe1.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.massiveImage-wrapper {
+  overflow-x: hidden;
+}
+
+/* Parallax background image */
+.section-3-1219 {
+  background-image: url("../img/imagen_cronica_01.071152af8763.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: 50% 0;
+  width: 100%;
+  /* height: 500px; */
+}
+
+.ct-section-inner-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 200px;
+  padding-right: 20px;
+  padding-bottom: 200px;
+  padding-left: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  max-width: 1120px;
+}
+/* Fin Parallax background image */
+
+.parallax-wrap {
+  position: relative;
+  z-index: 0;
+}
+
+.parallax-wrap span {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  width: 120px;
+}
+
+.parallax-wrap span img {
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+}
+
+.parallax-wrap span:nth-child(1) {
+  top: 9%;
+  /* left: 41%; */
+  left: 86%;
+  z-index: -1;
+}
+
+.parallax-wrap span:nth-child(2) {
+  top: 25%;
+  /*left: 84%;*/
+  left: 42%;
+  z-index: -1;
+}
+
+.parallax-wrap span:nth-child(3) {
+  top: 8%;
+  left: 2%;
+  z-index: -1;
+}
+
+#intro-home {
+  overflow: hidden;
+}
+
+.torneo-home {
+  position: relative;
+  /*overflow: hidden;*/
+  z-index: 3;
+}
+
+.shape-morph {
+  position: absolute;
+  right: -12px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.tablero {
+  position: absolute;
+  right: 0;
+  bottom: 8%;
+  top: 0;
+  z-index: 0;
+}
+
+.torneo-home img,
+.noticias-home img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.torneo-home > :last-child {
+  display: none;
+}
+
+/*
+.card::before {
+  content: "";
+  background: linear-gradient(130deg, #322381, #5f1ceb 41.07%, #c6a774 76.05%);
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  z-index: -1;
+  border-radius: 12px;
+}
+*/
+
+/* Grid fit */
+.grid-fit {
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.item-grid {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-column-gap: 15px;
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
+
+.item-info {
+  color: #6c757d;
+}
+
+.item-name {
+  font-size: var(--bs-body-font-size);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.img-wrapper img {
+  width: 100%;
+  border-radius: 3px;
+}
+
+@media only screen and (max-width: 991px) {
+  .torneo-home > div:not(:last-child) {
+    display: none;
+  }
+  .torneo-home > :last-child {
+    display: block;
+  }
+  .parallax-wrap {
+    overflow: hidden;
+  }
+  .parallax-wrap span:nth-child(1) {
+    top: 0%;
+    left: 64%;
+  }
+  .parallax-wrap span:nth-child(2) {
+    top: 8%;
+    left: 76%;
+  }
+  .parallax-wrap span:nth-child(3) {
+    top: 2%;
+    left: 1%;
+  }
+  #tablero-ajedrez,
+  #intro-home {
+    padding-bottom: 3rem;
+  }
+  .ct-section-inner-wrap {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+}
+
+@media only screen and (min-width: 968px) {
+  .torneo-home {
+    height: 400px;
+  }
+}

@@ -1,0 +1,85 @@
+body {
+  background-color: #f3efea;
+}
+
+.tournaments-and-sidebar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 3rem;
+  margin: 0 auto;
+}
+
+.pagination {
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-gap: 20px;
+}
+
+.grid > figure {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.grid > figure img {
+  max-width: 100%;
+}
+
+.text,
+figcaption {
+  padding: 0 20px 20px;
+}
+
+.table-dark-blue {
+  background: linear-gradient(171deg, #20123a 0%, rgb(50 35 129) 48%, rgb(50 35 129) 100%);
+  color: white;
+}
+
+/* .grid > figure:nth-child(1) { */
+/*   grid-row: span 2; */
+/* } */
+
+.single-module {
+  width: 300px;
+  margin: 0 0 3rem 0;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #f0f1f5;
+}
+
+.single-module .module {
+  margin: 0;
+}
+
+.single-module .module img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  box-shadow: 0 0 1.5rem rgb(17 17 17 / 70%);
+}
+
+.interlude {
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 1rem;
+  white-space: normal;
+  text-align: left;
+}
+
+.interlude a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Media querys */
+@media screen and (max-width: 800px) {
+  .tournaments-and-sidebar {
+    display: block;
+    padding-top: 0;
+  }
+}
