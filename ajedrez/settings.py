@@ -27,7 +27,7 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
-env.read_env(pathlib.Path(str(BASE_DIR)) / '.env')
+env.read_env(Path(str(BASE_DIR)) / '.env')
 # Take environment variables from .env file
 environ.Env.read_env()
 
