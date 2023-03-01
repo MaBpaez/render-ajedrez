@@ -201,4 +201,4 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Celery
-# CELERY_BROKER_URL = 'redis://default:L0OeBI4gunNhUWkQYgVs@containers-us-west-174.railway.app:5467'
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
